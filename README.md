@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Secure Authentication System
 
-## Getting Started
+## Project Overview
 
-First, run the development server:
+This project is a robust secure authentication system built with Next.js. It features user registration, login functionality, and multi-factor authentication to ensure the highest level of security for user accounts.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+- User registration with secure password hashing
+- User login with JWT (JSON Web Token) authentication
+- Multi-factor authentication (MFA) for enhanced security
+- Responsive and user-friendly interface
+- Server-side rendering with Next.js for improved performance and SEO
+
+## Technologies Used
+
+- **Next.js**: A React framework for building server-side rendered and statically generated applications
+- **React**: A JavaScript library for building user interfaces
+- **Node.js**: A JavaScript runtime built on Chrome's V8 JavaScript engine
+- **PostgreSQL**: An open-source relational database
+- **Prisma**: Next-generation ORM for Node.js and TypeScript
+- **bcrypt**: A library to help hash passwords
+- **jsonwebtoken**: An implementation of JSON Web Tokens
+- **speakeasy**: A library for two-factor authentication
+- **qrcode**: A QR code generator
+
+## Development Environment
+
+- **Operating System**: Windows
+- **Code Editor**: [Your preferred code editor, e.g., Visual Studio Code]
+- **Version Control**: Git
+- **Package Manager**: npm
+
+## Project Structure
+
+- **src/components**: Contains reusable UI components
+- **src/pages**: Contains Next.js pages
+- **src/utils**: Contains utility functions
+- **src/styles**: Contains global styles
+- **src/types**: Contains TypeScript types
+- **src/lib**: Contains library code
+- **src/hooks**: Contains custom hooks
+
+
+## Setup and Installation
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Set up your PostgreSQL database
+4. Create a `.env` file and add your database URL and JWT secret:
+
+```
+DATABASE_URL="your_database_url"
+JWT_SECRET="your_jwt_secret"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Start the development server: `npm run dev`
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

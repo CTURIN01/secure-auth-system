@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// prisma/schema.js
+const { PrismaClient } = require('@prisma/client');
+
+const prisma = new PrismaClient();
+
+const schema = `
+  datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+  }
+
+  generator client {
+    provider = "prisma-client-js"
+  }
+
+  model User {
+    id       String @id @default(uuid())
+    name     String
+    email    String @unique
+    password String
+  }
+`;
+
+async function createSchema() {
+  try {
+    await prisma.$executeRaw`CREATE SCHEMA IF NOT EXISTS public`;
+    await prisma.$executeRawUnsafe(schema);
+    console.log('Schema created successfully');
+  } catch (error) {
+    console.error('Error creating schema:', error);
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
+createSchema();
+
+// lib/prisma.js
+let prisma;
+
+if (process.env.NODE_ENV === 'production') {
+  prisma = new PrismaClient();
+} else {
+  if (!global.prisma) {
+    global.prisma = new PrismaClient();
+  }
+  prisma = global.prisma;
+}
+
+module.exports = prisma;
+
+// pages/api/auth/signup.js
+const bcrypt = require('bcryptjs');
+const prisma = require('../../../lib/prisma');
+
+module.exports = async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method not allowed' });
+  }
+
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: 'Missing required fields' });
+  }
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+      },
+    });
+
+    res.status(201).json({ message: 'User created successfully', userId: user.id });
+  } catch (error) {
+    console.error('Error creating user:', error);
+    res.status(500).json({ message: 'Error creating user' });
+  }
+};
